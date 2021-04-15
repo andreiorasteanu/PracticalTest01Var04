@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -39,7 +40,11 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
         }
 
         String[] restoredStrings = new String[3];
-        if(savedInstanceState != null) {
+        if(savedInstanceState == null){
+            Log.d("aaa", "Nu avem savedInstanceState?");
+        }
+        else {
+            Log.d("aaa", String.valueOf(savedInstanceState.containsKey("string")));
             if (savedInstanceState.containsKey("string")) {
                 restoredStrings = (String[]) savedInstanceState.get("string");
                 if(restoredStrings != null) {
@@ -55,6 +60,7 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
                 }
             }
         }
+
     }
 
     public void gotosecondary(View view) {
@@ -86,6 +92,12 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
                 }
             }
             display.setText(text);
+            Intent serviceIntent = new Intent(PracticalTest01Var04MainActivity.this, PracticalTest01Var04Service.class);
+            String[] numeGrupa = new String[2];
+            numeGrupa[0] = editText1.getText().toString();
+            numeGrupa[1] = editText2.getText().toString();
+            serviceIntent.putExtra("numegrupa", numeGrupa);
+            startService(serviceIntent);
         }
     }
 
@@ -101,17 +113,23 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
     public void onRestoreInstanceState(@NonNull Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
         String[] restoredStrings = new String[3];
-        if(savedInstanceState.containsKey("string")){
-            restoredStrings = (String[]) savedInstanceState.get("string");
-            if(restoredStrings != null) {
-                if (restoredStrings[0] != null) {
-                    editText1.setText(restoredStrings[0]);
-                }
-                if (restoredStrings[1] != null) {
-                    editText2.setText(restoredStrings[1]);
-                }
-                if (restoredStrings[2] != null) {
-                    display.setText(restoredStrings[2]);
+        if(savedInstanceState == null){
+            Log.d("aaa", "Nu avem savedInstanceState!!");
+        }
+        else {
+            Log.d("aaa", String.valueOf(savedInstanceState.containsKey("string")));
+            if (savedInstanceState.containsKey("string")) {
+                restoredStrings = (String[]) savedInstanceState.get("string");
+                if (restoredStrings != null) {
+                    if (restoredStrings[0] != null) {
+                        editText1.setText(restoredStrings[0]);
+                    }
+                    if (restoredStrings[1] != null) {
+                        editText2.setText(restoredStrings[1]);
+                    }
+                    if (restoredStrings[2] != null) {
+                        display.setText(restoredStrings[2]);
+                    }
                 }
             }
         }
