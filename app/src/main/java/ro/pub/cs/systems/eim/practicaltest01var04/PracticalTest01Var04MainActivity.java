@@ -1,5 +1,6 @@
 package ro.pub.cs.systems.eim.practicaltest01var04;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -36,19 +37,24 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
         if(rezultat != null && !rezultat.equals("")){
             Toast.makeText(getApplicationContext(), "Am revenit cu butonul " + rezultat, Toast.LENGTH_SHORT).show();
         }
-//        String[] restoredStrings = new String[3];
-//        if(savedInstanceState.containsKey("string")){
-//            restoredStrings = (String[]) savedInstanceState.get("string");
-//            if(restoredStrings[0] != null) {
-//                editText1.setText(restoredStrings[0]);
-//            }
-//            if(restoredStrings[1] != null) {
-//                editText2.setText(restoredStrings[1]);
-//            }
-//            if(restoredStrings[2] != null) {
-//                display.setText(restoredStrings[2]);
-//            }
-//        }
+
+        String[] restoredStrings = new String[3];
+        if(savedInstanceState != null) {
+            if (savedInstanceState.containsKey("string")) {
+                restoredStrings = (String[]) savedInstanceState.get("string");
+                if(restoredStrings != null) {
+                    if (restoredStrings[0] != null) {
+                        editText1.setText(restoredStrings[0]);
+                    }
+                    if (restoredStrings[1] != null) {
+                        editText2.setText(restoredStrings[1]);
+                    }
+                    if (restoredStrings[2] != null) {
+                        display.setText(restoredStrings[2]);
+                    }
+                }
+            }
+        }
     }
 
     public void gotosecondary(View view) {
@@ -84,23 +90,31 @@ public class PracticalTest01Var04MainActivity extends AppCompatActivity {
     }
 
 
-//    public void onSaveInstanceState(Bundle savedInstanceState){
-//        super.onSaveInstanceState(savedInstanceState);
-//        String[] savedStrings = new String[3];
-//        savedStrings[0] = editText1.getText().toString();
-//        savedStrings[1] = editText2.getText().toString();
-//        savedStrings[2] = display.getText().toString();
-//        savedInstanceState.putStringArray("string", savedStrings);
-//    }
-//    public void onRestoreInstanceState(Bundle savedInstanceState){
-//        super.onRestoreInstanceState(savedInstanceState);
-//        String[] restoredStrings = new String[3];
-//        if(savedInstanceState.containsKey("string")){
-//            restoredStrings = (String[]) savedInstanceState.get("string");
-//            editText1.setText(restoredStrings[0]);
-//            editText2.setText(restoredStrings[1]);
-//            display.setText(restoredStrings[2]);
-//        }
-//
-//    }
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        String[] savedStrings = new String[3];
+        savedStrings[0] = editText1.getText().toString();
+        savedStrings[1] = editText2.getText().toString();
+        savedStrings[2] = display.getText().toString();
+        savedInstanceState.putStringArray("string", savedStrings);
+    }
+    public void onRestoreInstanceState(@NonNull Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        String[] restoredStrings = new String[3];
+        if(savedInstanceState.containsKey("string")){
+            restoredStrings = (String[]) savedInstanceState.get("string");
+            if(restoredStrings != null) {
+                if (restoredStrings[0] != null) {
+                    editText1.setText(restoredStrings[0]);
+                }
+                if (restoredStrings[1] != null) {
+                    editText2.setText(restoredStrings[1]);
+                }
+                if (restoredStrings[2] != null) {
+                    display.setText(restoredStrings[2]);
+                }
+            }
+        }
+
+    }
 }
